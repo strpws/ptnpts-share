@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahasiswa Baru PTN vs PTS 2014–2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:       #00559A;
+  --blue-pale:  #EBF2FA;
+  --blue-deep:  #004A88;
+  --blue-hover: #0062B1;
+  --gold:       #DBAA00;
+  --gold-pale:  #FEF6D8;
+  --gold-deep:  #9A7800;
+  --gold-hover: #E8B500;
+  --black:      #222222;
+  --grey-dk:    #333333;
+  --grey-md:    #666666;
+  --grey-lt:    #999999;
+  --border:     #DDDDDD;
+  --divider:    #EFEFEF;
+  --surface:    #F4F4F4;
+  --white:      #FFFFFF;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
+  background: #F0F2F5;
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 720px;
+  padding: 20px 22px 16px;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 2 / 3;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: cardIn 0.35s ease 0.08s forwards;
+}
+@keyframes cardIn { to { opacity: 1; transform: none; } }
+
+/* ── Header ── */
+.card-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.3;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.card-deck {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--grey-md);
+  line-height: 1.52;
+  margin-bottom: 13px;
+  flex-shrink: 0;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-top: 1px solid var(--surface);
+  border-bottom: 1px solid var(--surface);
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-dk);
+}
+.legend-swatch {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Chart container ── */
+.chart-container {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+#chart-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Tooltip ── */
+.tooltip {
+  position: absolute;
+  top: 0; left: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 12px 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  font-family: 'PT Sans', sans-serif;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+  z-index: 10;
+  min-width: 108px;
+}
+.tooltip.visible { opacity: 1; }
+
+.tt-year {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 7px;
+  line-height: 1;
+}
+.tt-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.tt-row:last-child { margin-bottom: 0; }
+.tt-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tt-dot--ptn { background: var(--blue); }
+.tt-dot--pts { background: var(--gold); }
+.tt-tag {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--grey-lt);
+  flex: 1;
+  letter-spacing: 0.03em;
+}
+.tt-val {
+  font-size: 14px;
+  font-weight: 700;
+}
+.tt-val--ptn { color: var(--blue); }
+.tt-val--pts { color: var(--gold-deep); }
+.tt-diff {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: var(--blue-pale);
+  color: var(--blue-deep);
+  margin-left: 4px;
+  white-space: nowrap;
+}
+
+/* ── Source note ── */
+.source-note {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 12px;
+  color: var(--grey-lt);
+  line-height: 1.45;
+  border-top: 1px solid var(--border);
+  padding-top: 9px;
+  margin-top: 13px;
+  flex-shrink: 0;
+}
+.source-note strong { color: var(--grey-md); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1 class="card-title">Perbandingan Jumlah Mahasiswa Baru 2014–2025</h1>
+  <p class="card-deck">Dalam satu dekade terakhir, pangsa PTN dalam penerimaan mahasiswa baru terus tumbuh, dari hanya sekitar sepertiga mahasiswa baru, hingga mendekati separuh dari total calon mahasiswa baru.</p>
+
+  <div class="legend" aria-hidden="true">
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--blue)"></div>
+      PTN
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--gold)"></div>
+      PTS
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <svg id="chart-svg" role="img" aria-label="Grafik garis tren mahasiswa baru PTN dan PTS 2014–2025"></svg>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+  <p class="source-note">
+    <strong>Sumber:</strong> PDDikti &nbsp;·&nbsp;
+    <strong>Diolah:</strong> Kompas/EKI/FAI/SPW
+  </p>
+</div>
+
+<script>
+const DATA = [
+  { year: 2014, ptn: 34.4, pts: 65.6, diff: null  },
+  { year: 2015, ptn: 37.6, pts: 62.4, diff:  3.2  },
+  { year: 2016, ptn: 37.9, pts: 62.1, diff:  3.5  },
+  { year: 2017, ptn: 38.4, pts: 61.6, diff:  4.0  },
+  { year: 2018, ptn: 38.0, pts: 62.0, diff:  3.6  },
+  { year: 2019, ptn: 38.1, pts: 61.9, diff:  3.7  },
+  { year: 2020, ptn: 39.5, pts: 60.5, diff:  5.1  },
+  { year: 2021, ptn: 40.5, pts: 59.5, diff:  6.1  },
+  { year: 2022, ptn: 41.1, pts: 58.9, diff:  6.7  },
+  { year: 2023, ptn: 43.4, pts: 56.6, diff:  9.0  },
+  { year: 2024, ptn: 45.6, pts: 54.4, diff: 11.2  },
+  { year: 2025, ptn: 47.3, pts: 52.7, diff: 12.9  },
+];
+
+const Y_MIN   = 30;
+const Y_MAX   = 72;
+const Y_TICKS = [35, 40, 45, 50, 55, 60, 65, 70];
+const M       = { top: 18, right: 24, bottom: 44, left: 54 };
+
+const SVG  = document.getElementById('chart-svg');
+const TIP  = document.getElementById('tooltip');
+const NS   = 'http://www.w3.org/2000/svg';
+
+const fmt  = v => v.toFixed(1).replace('.', ',') + '%';
+const fmtD = v => '+' + v.toFixed(1).replace('.', ',') + ' pp';
+
+/* ─ SVG helpers ─ */
+function el(tag, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  return e;
+}
+function txt(s, attrs = {}) {
+  const e = el('text', attrs);
+  e.textContent = s;
+  return e;
+}
+
+/* ─ Coordinate helpers (set per draw call) ─ */
+let W, H, plotW, plotH;
+
+function xOf(year) {
+  return M.left + (year - 2014) * plotW / (DATA.length - 1);
+}
+function yOf(pct) {
+  return M.top + (1 - (pct - Y_MIN) / (Y_MAX - Y_MIN)) * plotH;
+}
+function polyline(key) {
+  return DATA.map(d => `${xOf(d.year).toFixed(2)},${yOf(d[key]).toFixed(2)}`).join(' ');
+}
+
+/* ─ Hover state ─ */
+let crosshair, hDotPtn, hDotPts;
+let hovering = false;
+
+function nearestIdx(svgX) {
+  const step = plotW / (DATA.length - 1);
+  return Math.max(0, Math.min(DATA.length - 1, Math.round((svgX - M.left) / step)));
+}
+
+function showTip(idx, svgRect) {
+  const d = DATA[idx];
+  const x = xOf(d.year);
+
+  crosshair.setAttribute('x1', x); crosshair.setAttribute('x2', x);
+  crosshair.setAttribute('y1', M.top); crosshair.setAttribute('y2', M.top + plotH);
+  crosshair.style.opacity = 1;
+
+  hDotPtn.setAttribute('cx', x); hDotPtn.setAttribute('cy', yOf(d.ptn));
+  hDotPts.setAttribute('cx', x); hDotPts.setAttribute('cy', yOf(d.pts));
+  hDotPtn.style.opacity = 1;
+  hDotPts.style.opacity = 1;
+
+  const pill = d.diff != null
+    ? `<span class="tt-diff">${fmtD(d.diff)}</span>` : '';
+
+  TIP.innerHTML =
+    `<div class="tt-year">${d.year}</div>
+     <div class="tt-row">
+       <span class="tt-dot tt-dot--ptn"></span>
+       <span class="tt-tag">PTN</span>
+       <span class="tt-val tt-val--ptn">${fmt(d.ptn)}</span>${pill}
+     </div>
+     <div class="tt-row">
+       <span class="tt-dot tt-dot--pts"></span>
+       <span class="tt-tag">PTS</span>
+       <span class="tt-val tt-val--pts">${fmt(d.pts)}</span>
+     </div>`;
+
+  TIP.classList.add('visible');
+
+  /* position tooltip: right of crosshair if in left half, left otherwise */
+  const container  = SVG.parentElement;
+  const cRect      = container.getBoundingClientRect();
+  const absX       = svgRect.left - cRect.left + x;
+  const onLeft     = idx <= DATA.length / 2;
+  const tipW       = TIP.offsetWidth || 130;
+  const tipY       = svgRect.top - cRect.top + M.top;
+
+  TIP.style.left   = onLeft  ? (absX + 14) + 'px' : 'auto';
+  TIP.style.right  = !onLeft ? (cRect.width - absX + 14) + 'px' : 'auto';
+  TIP.style.top    = tipY + 'px';
+}
+
+function hideTip() {
+  TIP.classList.remove('visible');
+  if (crosshair)  crosshair.style.opacity = 0;
+  if (hDotPtn)    hDotPtn.style.opacity   = 0;
+  if (hDotPts)    hDotPts.style.opacity   = 0;
+}
+
+/* ─ Main draw ─ */
+let drawn = false;
+let dotsEl = [];
+
+function draw(animate) {
+  const rect = SVG.getBoundingClientRect();
+  W = rect.width;  H = rect.height;
+  if (W < 10 || H < 10) return;
+
+  plotW = W - M.left - M.right;
+  plotH = H - M.top  - M.bottom;
+
+  SVG.innerHTML = '';
+  dotsEl = [];
+
+  /* — Gridlines + Y labels — */
+  for (const pct of Y_TICKS) {
+    const y      = yOf(pct);
+    const is50   = pct === 50;
+    const gColor = is50 ? '#CCCCCC' : '#EFEFEF';
+    const lColor = is50 ? '#999999' : '#CCCCCC';
+
+    SVG.appendChild(el('line', {
+      x1: M.left, y1: y, x2: M.left + plotW, y2: y,
+      stroke: gColor, 'stroke-width': 1,
+      'stroke-dasharray': is50 ? '5 3' : 'none',
+    }));
+
+    SVG.appendChild(txt(pct + '%', {
+      x: M.left - 7, y,
+      'text-anchor': 'end', 'dominant-baseline': 'middle',
+      'font-family': "'PT Sans', sans-serif",
+      'font-size': 12, 'font-weight': 700, fill: lColor,
+    }));
+
+    /* "50%" callout label to the right */
+    if (is50) {
+      SVG.appendChild(txt('50%', {
+        x: M.left + plotW + 5, y,
+        'text-anchor': 'start', 'dominant-baseline': 'middle',
+        'font-family': "'PT Sans', sans-serif",
+        'font-size': 11, 'font-weight': 700, fill: '#BBBBBB',
+      }));
+    }
+  }
+
+  /* — X labels — */
+  DATA.forEach((d, i) => {
+    /* show all years; thinner color for intermediate ones */
+    const prominent = i === 0 || i === DATA.length - 1 || i % 3 === 0;
+    SVG.appendChild(txt(d.year, {
+      x: xOf(d.year), y: M.top + plotH + 22,
+      'text-anchor': 'middle', 'dominant-baseline': 'auto',
+      'font-family': "'PT Sans', sans-serif",
+      'font-size': 12, 'font-weight': 700,
+      fill: prominent ? '#888888' : '#BBBBBB',
+    }));
+    /* tick */
+    SVG.appendChild(el('line', {
+      x1: xOf(d.year), y1: M.top + plotH,
+      x2: xOf(d.year), y2: M.top + plotH + 4,
+      stroke: '#DDDDDD', 'stroke-width': 1,
+    }));
+  });
+
+  /* — Lines (polyline, animated via dashoffset on path) — */
+  function makeLine(key, color) {
+    /* use path for dashoffset animation */
+    const pts  = DATA.map(d => `${xOf(d.year).toFixed(2)},${yOf(d[key]).toFixed(2)}`);
+    const d    = 'M ' + pts.join(' L ');
+    const path = el('path', {
+      d, fill: 'none', stroke: color,
+      'stroke-width': 2.5,
+      'stroke-linejoin': 'round', 'stroke-linecap': 'round',
+    });
+    SVG.appendChild(path);
+    return path;
+  }
+
+  const ptsLine = makeLine('pts', 'var(--gold)');
+  const ptnLine = makeLine('ptn', 'var(--blue)');
+
+  /* — Dots — */
+  function makeDots(key, fill, stroke) {
+    return DATA.map(d => {
+      const c = el('circle', {
+        cx: xOf(d.year), cy: yOf(d[key]),
+        r: 3.5, fill, stroke, 'stroke-width': 2, opacity: 0,
+      });
+      SVG.appendChild(c);
+      return c;
+    });
+  }
+
+  const ptsDots = makeDots('pts', 'var(--white)', 'var(--gold)');
+  const ptnDots = makeDots('ptn', 'var(--white)', 'var(--blue)');
+  dotsEl = [...ptsDots, ...ptnDots];
+
+  /* — Crosshair + hover dots (drawn on top) — */
+  crosshair = el('line', {
+    x1: 0, y1: 0, x2: 0, y2: 0,
+    stroke: '#CCCCCC', 'stroke-width': 1, 'stroke-dasharray': '3 2', opacity: 0,
+  });
+  hDotPts = el('circle', { r: 5.5, fill: 'var(--gold-hover)',  opacity: 0, 'pointer-events': 'none' });
+  hDotPtn = el('circle', { r: 5.5, fill: 'var(--blue-hover)', opacity: 0, 'pointer-events': 'none' });
+
+  SVG.appendChild(crosshair);
+  SVG.appendChild(hDotPts);
+  SVG.appendChild(hDotPtn);
+
+  /* — Hover zone (transparent rect) — */
+  const zone = el('rect', {
+    x: M.left, y: M.top, width: plotW, height: plotH,
+    fill: 'transparent', cursor: 'crosshair',
+  });
+
+  let lastIdx = -1;
+  zone.addEventListener('mousemove', e => {
+    const svgRect = SVG.getBoundingClientRect();
+    const idx = nearestIdx(e.clientX - svgRect.left);
+    if (idx !== lastIdx) { lastIdx = idx; showTip(idx, svgRect); }
+  });
+  zone.addEventListener('mouseleave', () => { lastIdx = -1; hideTip(); });
+
+  SVG.appendChild(zone);
+
+  /* — Animate lines & dots — */
+  if (animate) {
+    [ptnLine, ptsLine].forEach((path, li) => {
+      const len = path.getTotalLength();
+      path.style.strokeDasharray  = len;
+      path.style.strokeDashoffset = len;
+      requestAnimationFrame(() => {
+        path.style.transition = `stroke-dashoffset 1.1s cubic-bezier(0.16,1,0.3,1) ${li * 80}ms`;
+        path.style.strokeDashoffset = 0;
+      });
+    });
+    dotsEl.forEach((dot, i) => {
+      setTimeout(() => {
+        dot.style.transition = 'opacity 0.25s ease';
+        dot.style.opacity = 1;
+      }, 1200 + i * 18);
+    });
+  } else {
+    /* instant (redraw after resize) */
+    dotsEl.forEach(dot => { dot.style.opacity = 1; });
+  }
+}
+
+/* ─ Trigger on visibility ─ */
+let animated = false;
+
+function trigger() {
+  if (animated) return;
+  animated = true;
+  draw(true);
+}
+
+if ('IntersectionObserver' in window) {
+  const obs = new IntersectionObserver(es => {
+    if (es[0].isIntersecting) { trigger(); obs.disconnect(); }
+  }, { threshold: 0.2 });
+  obs.observe(SVG);
+} else {
+  setTimeout(trigger, 250);
+}
+
+/* ─ Resize ─ */
+if ('ResizeObserver' in window) {
+  new ResizeObserver(() => { if (animated) draw(false); }).observe(SVG);
+} else {
+  window.addEventListener('resize', () => { if (animated) draw(false); });
+}
+</script>
+</body>
+</html>

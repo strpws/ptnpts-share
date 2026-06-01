@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visual Guidelines v2 — PTN/PTS Infographic System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:      #00559A;
+  --blue-pale: #EBF2FA;
+  --blue-deep: #004A88;
+  --blue-hover:#0062B1;
+  --gold:      #DBAA00;
+  --gold-pale: #FEF6D8;
+  --gold-deep: #9A7800;
+  --gold-hover:#E8B500;
+  --black:     #222222;
+  --grey-dk:   #333333;
+  --grey-md:   #666666;
+  --grey-lt:   #999999;
+  --border:    #DDDDDD;
+  --divider:   #EFEFEF;
+  --surface:   #F4F4F4;
+  --row-hover: #F5F8FC;
+  --white:     #FFFFFF;
+
+  --page-bg:   #F0F2F5;
+  --max:       720px;
+}
+
+body {
+  font-family: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
+  background: var(--page-bg);
+  color: var(--grey-dk);
+  padding: 48px 24px 80px;
+  line-height: 1.5;
+}
+
+.page { max-width: var(--max); margin: 0 auto; }
+
+/* ── Section shell ── */
+.section { margin-bottom: 52px; }
+
+.section-title {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey-lt);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Page title ── */
+.page-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.page-subtitle {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 13px;
+  color: var(--grey-md);
+  margin-bottom: 40px;
+}
+
+/* ── Color palette ── */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.swatch-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.swatch-block {
+  height: 56px;
+}
+
+.swatch-info {
+  padding: 8px 10px;
+}
+
+.swatch-name {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--grey-dk);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.swatch-hex {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--grey-lt);
+}
+
+.swatch-role {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 9px;
+  color: var(--grey-lt);
+  display: block;
+  margin-top: 3px;
+}
+
+/* ── Typography ── */
+.type-row {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.type-meta {
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.type-label {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--grey-lt);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.type-spec {
+  font-family: monospace;
+  font-size: 9px;
+  color: var(--grey-lt);
+  line-height: 1.6;
+}
+
+.type-sample { flex: 1; }
+
+/* ── Spacing ── */
+.spacing-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spacing-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 16px;
+}
+
+.spacing-block {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue);
+  border-radius: 2px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.spacing-info {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  color: var(--grey-md);
+}
+
+.spacing-info strong {
+  font-weight: 700;
+  color: var(--grey-dk);
+}
+
+/* ── Component demos ── */
+.demo-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 20px 22px 16px;
+  max-width: 460px;
+  margin-bottom: 16px;
+}
+
+/* legend demo */
+.legend {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-top: 1px solid var(--surface);
+  border-bottom: 1px solid var(--surface);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-dk);
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* chart row demo */
+.chart-row {
+  position: relative;
+  padding: 9px 5px;
+  border-radius: 4px;
+}
+
+.chart-row + .chart-row { border-top: 1px solid var(--divider); }
+
+.row-label {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--grey-dk);
+  margin-bottom: 6px;
+  padding-right: 70px;
+  line-height: 1.2;
+}
+
+.bars { display: flex; flex-direction: column; gap: 4px; }
+
+.bar-line { display: flex; align-items: center; gap: 5px; }
+
+.bar-tag {
+  width: 24px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--grey-lt);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 13px;
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+}
+
+.bar-fill--ptn { background: var(--blue);  width: 77.57%; }
+.bar-fill--pts { background: var(--gold);  width: 93.78%; }
+
+.bar-val {
+  width: 34px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bar-val--ptn { color: var(--blue); }
+.bar-val--pts { color: var(--gold-deep); }
+
+/* diff pill demo */
+.diff-pill-demo {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.diff-pill {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.diff-pill--pts { background: var(--gold-pale); color: var(--gold-deep); }
+.diff-pill--ptn { background: var(--blue-pale); color: var(--blue-deep); }
+
+/* source note demo */
+.source-note {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  color: var(--grey-lt);
+  line-height: 1.45;
+  border-top: 1px solid var(--border);
+  padding-top: 9px;
+  margin-top: 13px;
+}
+
+.source-note strong { color: var(--grey-md); font-weight: 700; }
+
+/* ── Rules & guidelines ── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 500px) { .rules-grid { grid-template-columns: 1fr; } }
+
+.rule-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+.rule-heading {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--grey-dk);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.rule-body {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 11px;
+  color: var(--grey-md);
+  line-height: 1.55;
+}
+
+.rule-body li {
+  margin-left: 14px;
+  margin-bottom: 4px;
+}
+
+/* ── Divider label ── */
+.comp-label {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-lt);
+  margin-bottom: 8px;
+}
+
+/* ── Animation spec ── */
+.anim-row {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 16px;
+}
+
+.anim-name {
+  min-width: 130px;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--grey-dk);
+}
+
+.anim-spec {
+  font-family: monospace;
+  font-size: 9.5px;
+  color: var(--grey-md);
+  line-height: 1.7;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="page-title">Visual Guidelines <span style="font-size:14px;font-weight:400;color:#999;">v2 — larger type scale</span></p>
+  <p class="page-subtitle">Design system for PTN/PTS data infographics — colors, type, spacing, components, and rules.</p>
+
+  <!-- ── 1. COLOR PALETTE ── -->
+  <div class="section">
+    <p class="section-title">1 — Color Palette</p>
+    <div class="palette">
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#00559A"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Blue</span>
+          <span class="swatch-hex">#00559A</span>
+          <span class="swatch-role">PTN · primary bars · links</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#0062B1"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Blue Hover</span>
+          <span class="swatch-hex">#0062B1</span>
+          <span class="swatch-role">PTN bar on row hover</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#004A88"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Blue Deep</span>
+          <span class="swatch-hex">#004A88</span>
+          <span class="swatch-role">PTN pill text</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#EBF2FA"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Blue Pale</span>
+          <span class="swatch-hex">#EBF2FA</span>
+          <span class="swatch-role">PTN pill background</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#DBAA00"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Gold</span>
+          <span class="swatch-hex">#DBAA00</span>
+          <span class="swatch-role">PTS · primary bars</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#E8B500"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Gold Hover</span>
+          <span class="swatch-hex">#E8B500</span>
+          <span class="swatch-role">PTS bar on row hover</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#9A7800"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Gold Deep</span>
+          <span class="swatch-hex">#9A7800</span>
+          <span class="swatch-role">PTS values · pill text</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#FEF6D8"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Gold Pale</span>
+          <span class="swatch-hex">#FEF6D8</span>
+          <span class="swatch-role">PTS pill background</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#222222"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Black</span>
+          <span class="swatch-hex">#222222</span>
+          <span class="swatch-role">Headline text</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#333333"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Grey Dark</span>
+          <span class="swatch-hex">#333333</span>
+          <span class="swatch-role">Row labels · legend</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#666666"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Grey Mid</span>
+          <span class="swatch-hex">#666666</span>
+          <span class="swatch-role">Deck / subhead text</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#999999"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Grey Light</span>
+          <span class="swatch-hex">#999999</span>
+          <span class="swatch-role">Bar tags · source note</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#DDDDDD; border-bottom:1px solid #eee"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Border</span>
+          <span class="swatch-hex">#DDDDDD</span>
+          <span class="swatch-role">Footer rule · row dividers</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#EFEFEF; border-bottom:1px solid #eee"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Divider</span>
+          <span class="swatch-hex">#EFEFEF</span>
+          <span class="swatch-role">Between chart rows</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#F4F4F4; border-bottom:1px solid #eee"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Surface</span>
+          <span class="swatch-hex">#F4F4F4</span>
+          <span class="swatch-role">Page bg · bar tracks</span>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-block" style="background:#F5F8FC; border-bottom:1px solid #eee"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Row Hover</span>
+          <span class="swatch-hex">#F5F8FC</span>
+          <span class="swatch-role">Hovered chart row bg</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 2. TYPOGRAPHY ── -->
+  <div class="section">
+    <p class="section-title">2 — Typography</p>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Headline / Title</span>
+        <span class="type-spec">Lora Bold<br>19px / line-height 1.33<br>color: #222222</span>
+      </div>
+      <div class="type-sample">
+        <span style="font-family:'Lora',serif;font-size:19px;font-weight:700;color:#222;line-height:1.33;">Lama Tunggu Lulusan PTN dan PTS Mendapat Kerja</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Deck / Subheadline</span>
+        <span class="type-spec">Lora Italic Regular<br>14px / line-height 1.52<br>color: #666666</span>
+      </div>
+      <div class="type-sample">
+        <span style="font-family:'Lora',serif;font-style:italic;font-size:14px;color:#666;line-height:1.52;">Persentase lulusan S1 usia 20–25 tahun berdasarkan lama waktu tunggu pekerjaan formal pertama setelah lulus</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Row Label</span>
+        <span class="type-spec">PT Sans Bold<br>14px / line-height 1.2<br>color: #333333</span>
+      </div>
+      <div class="type-sample">
+        <span style="font-family:'PT Sans',sans-serif;font-size:14px;font-weight:700;color:#333;line-height:1.2;">2–3 bulan</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Bar Value</span>
+        <span class="type-spec">PT Sans Bold<br>12px / right-aligned<br>PTN: #00559A · PTS: #9A7800</span>
+      </div>
+      <div class="type-sample" style="display:flex;gap:16px;">
+        <span style="font-family:'PT Sans',sans-serif;font-size:12px;font-weight:700;color:#00559A;">28.7%</span>
+        <span style="font-family:'PT Sans',sans-serif;font-size:12px;font-weight:700;color:#9A7800;">34.7%</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Legend / Bar Tag</span>
+        <span class="type-spec">PT Sans Bold<br>11–12px / tracking 0.04em<br>color: #999999</span>
+      </div>
+      <div class="type-sample" style="display:flex;gap:16px;align-items:center;">
+        <span style="font-family:'PT Sans',sans-serif;font-size:12px;font-weight:700;color:#333;">PTN</span>
+        <span style="font-family:'PT Sans',sans-serif;font-size:11px;font-weight:700;color:#999;letter-spacing:0.04em;">PTN</span>
+        <span style="font-family:'PT Sans',sans-serif;font-size:11px;font-weight:700;color:#999;letter-spacing:0.04em;">PTS</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Diff Pill</span>
+        <span class="type-spec">PT Sans Bold<br>10px / tracking 0.025em<br>PTN: #004A88 · PTS: #9A7800</span>
+      </div>
+      <div class="type-sample" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-family:'PT Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.025em;padding:3px 9px;border-radius:9999px;background:#EBF2FA;color:#004A88;">PTN +6.4 pp</span>
+        <span style="font-family:'PT Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.025em;padding:3px 9px;border-radius:9999px;background:#FEF6D8;color:#9A7800;">PTS +6.0 pp</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">Source Note</span>
+        <span class="type-spec">PT Sans Regular<br>10px / line-height 1.45<br>color: #999999</span>
+      </div>
+      <div class="type-sample">
+        <span style="font-family:'PT Sans',sans-serif;font-size:10px;color:#999;line-height:1.45;"><strong style="color:#666;">Sumber:</strong> Survei Angkatan Kerja Nasional (Sakernas), BPS, Februari 2025</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── 3. SPACING ── -->
+  <div class="section">
+    <p class="section-title">3 — Spacing Tokens</p>
+    <div class="spacing-grid">
+
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:4px"></div>
+        <div class="spacing-info"><strong>4px</strong> — gap between bar lines</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:5px"></div>
+        <div class="spacing-info"><strong>5px</strong> — gap in bar-line; row padding horizontal</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:6px"></div>
+        <div class="spacing-info"><strong>6px</strong> — title → deck; label → bars</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:7px"></div>
+        <div class="spacing-info"><strong>7px</strong> — legend padding vertical</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:9px"></div>
+        <div class="spacing-info"><strong>9px</strong> — chart row padding vertical</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:13px"></div>
+        <div class="spacing-info"><strong>13px</strong> — deck → legend; footer margin-top</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:14px"></div>
+        <div class="spacing-info"><strong>14px</strong> — gap between legend items</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-block" style="width:20px"></div>
+        <div class="spacing-info"><strong>20–22px</strong> — card body padding (top/sides)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 4. COMPONENTS ── -->
+  <div class="section">
+    <p class="section-title">4 — Components</p>
+
+    <p class="comp-label">Card Shell</p>
+    <div class="demo-card" style="margin-bottom:24px;">
+      <p style="font-family:'PT Sans',sans-serif;font-size:10px;color:#999;margin-bottom:4px;">Card: max-width 460px · border-radius 8px · padding 20px 22px 16px · no border · no shadow</p>
+      <p style="font-family:'PT Sans',sans-serif;font-size:10px;color:#999;">Card entrance animation: opacity 0→1 + translateY 6px→0, 0.35s ease</p>
+    </div>
+
+    <p class="comp-label">Legend</p>
+    <div class="demo-card" style="padding:0 22px;margin-bottom:24px;">
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#00559A"></div>
+          PTN
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background:#DBAA00"></div>
+          PTS
+        </div>
+      </div>
+    </div>
+
+    <p class="comp-label">Chart Row (static example)</p>
+    <div class="demo-card" style="padding:0 22px;margin-bottom:24px;">
+      <div class="chart-row">
+        <div class="row-label">2–3 bulan</div>
+        <div class="bars">
+          <div class="bar-line">
+            <span class="bar-tag">PTN</span>
+            <div class="bar-track"><div class="bar-fill bar-fill--ptn"></div></div>
+            <span class="bar-val bar-val--ptn">28.7%</span>
+          </div>
+          <div class="bar-line">
+            <span class="bar-tag">PTS</span>
+            <div class="bar-track"><div class="bar-fill bar-fill--pts"></div></div>
+            <span class="bar-val bar-val--pts">34.7%</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="row-label">4–6 bulan</div>
+        <div class="bars">
+          <div class="bar-line">
+            <span class="bar-tag">PTN</span>
+            <div class="bar-track"><div class="bar-fill bar-fill--ptn" style="width:36.22%"></div></div>
+            <span class="bar-val bar-val--ptn">13.4%</span>
+          </div>
+          <div class="bar-line">
+            <span class="bar-tag">PTS</span>
+            <div class="bar-track"><div class="bar-fill bar-fill--pts" style="width:37.84%"></div></div>
+            <span class="bar-val bar-val--pts">14.0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="comp-label">Diff Pills (appear on hover)</p>
+    <div class="demo-card" style="margin-bottom:24px;">
+      <div class="diff-pill-demo">
+        <span class="diff-pill diff-pill--pts">PTS +6.0 pp</span>
+        <span class="diff-pill diff-pill--ptn">PTN +6.4 pp</span>
+      </div>
+      <p style="font-family:'PT Sans',sans-serif;font-size:9px;color:#999;margin-top:10px;">Positioned absolute top-right of each row. Fades in on hover: opacity 0→1, scale 0.88→1, 0.14s ease.</p>
+    </div>
+
+    <p class="comp-label">Source Note</p>
+    <div class="demo-card">
+      <p class="source-note"><strong>Sumber:</strong> Survei Angkatan Kerja Nasional (Sakernas), BPS, Februari 2025</p>
+    </div>
+
+  </div>
+
+  <!-- ── 5. SHAPE & RADIUS ── -->
+  <div class="section">
+    <p class="section-title">5 — Shape &amp; Border Radius</p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <p class="rule-heading">Radii</p>
+        <ul class="rule-body">
+          <li><strong>8px</strong> — card shell</li>
+          <li><strong>4px</strong> — chart row hover state</li>
+          <li><strong>2px</strong> — bar tracks, bar fills, legend swatches</li>
+          <li><strong>9999px</strong> — diff pills (full pill)</li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <p class="rule-heading">Bar Geometry</p>
+        <ul class="rule-body">
+          <li>Track height: <strong>13px</strong></li>
+          <li>Scale max: set ~7% above highest data point</li>
+          <li>Bar fills are proportional to max, not 100%</li>
+          <li>Bar tag column: fixed <strong>24px</strong></li>
+          <li>Bar value column: fixed <strong>34px</strong>, right-aligned</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. ANIMATION ── -->
+  <div class="section">
+    <p class="section-title">6 — Animation</p>
+
+    <div class="anim-row">
+      <div class="anim-name">Card entrance</div>
+      <div class="anim-spec">opacity 0→1, translateY 6px→0<br>duration: 0.35s · easing: ease</div>
+    </div>
+    <div class="anim-row">
+      <div class="anim-name">Bar grow</div>
+      <div class="anim-spec">width 0→target%<br>duration: 0.82s · easing: cubic-bezier(0.16, 1, 0.3, 1) (spring)<br>stagger: 100ms base + 95ms × row index</div>
+    </div>
+    <div class="anim-row">
+      <div class="anim-name">Diff pill appear</div>
+      <div class="anim-spec">opacity 0→1, scale 0.88→1<br>duration: 0.14s · easing: ease · trigger: row hover</div>
+    </div>
+    <div class="anim-row">
+      <div class="anim-name">Row hover bg</div>
+      <div class="anim-spec">background transparent→#F5F8FC<br>duration: 0.13s · easing: ease</div>
+    </div>
+    <div class="anim-row">
+      <div class="anim-name">Trigger</div>
+      <div class="anim-spec">IntersectionObserver at 20% visibility threshold<br>Falls back to setTimeout 250ms if observer unavailable<br>Fires once; observer disconnects after first trigger</div>
+    </div>
+
+  </div>
+
+  <!-- ── 7. RULES ── -->
+  <div class="section">
+    <p class="section-title">7 — Design Rules</p>
+    <div class="rules-grid">
+
+      <div class="rule-card">
+        <p class="rule-heading">Color Assignment</p>
+        <ul class="rule-body">
+          <li>Blue (#00559A) always = PTN (negeri)</li>
+          <li>Gold (#DBAA00) always = PTS (swasta)</li>
+          <li>Never swap these two roles</li>
+          <li>Use pale variants only for pill backgrounds</li>
+          <li>Use deep variants only for text on pale backgrounds</li>
+        </ul>
+      </div>
+
+      <div class="rule-card">
+        <p class="rule-heading">Typography Rules</p>
+        <ul class="rule-body">
+          <li>Lora = editorial (titles, decks only)</li>
+          <li>PT Sans = UI / data (everything else)</li>
+          <li>All labels are Bold weight — no Regular for labels</li>
+          <li>Deck is the only italic usage</li>
+        </ul>
+      </div>
+
+      <div class="rule-card">
+        <p class="rule-heading">Card Layout</p>
+        <ul class="rule-body">
+          <li>Width is fluid — fills the CMS column</li>
+          <li>Background is white (#FFFFFF) — blends with page</li>
+          <li>No border, no box-shadow</li>
+          <li>Always include title, deck, legend, chart, and source note</li>
+          <li>Source must credit dataset and date</li>
+          <li>Footer always separated by a #DDD border</li>
+        </ul>
+      </div>
+
+      <div class="rule-card">
+        <p class="rule-heading">Accessibility</p>
+        <ul class="rule-body">
+          <li>Chart is role="list"; each row role="listitem"</li>
+          <li>aria-label on each row: "{label}: PTN X%, PTS Y%"</li>
+          <li>Legend and pills marked aria-hidden="true"</li>
+          <li>Honor prefers-reduced-motion: disable all transitions</li>
+        </ul>
+      </div>
+
+      <div class="rule-card">
+        <p class="rule-heading">Data Formatting</p>
+        <ul class="rule-body">
+          <li>Percentages: always 1 decimal place (e.g. 28.7%)</li>
+          <li>Diff pills: 1 decimal place + " pp" (percentage points)</li>
+          <li>Bar scale ceiling: max data value + ~7% headroom</li>
+          <li>Range labels use en-dash (–), not hyphen (-)</li>
+        </ul>
+      </div>
+
+      <div class="rule-card">
+        <p class="rule-heading">Hover Interaction</p>
+        <ul class="rule-body">
+          <li>Row background → #F5F8FC on hover</li>
+          <li>PTN bar brightens to #0062B1</li>
+          <li>PTS bar brightens to #E8B500</li>
+          <li>Diff pill appears (opacity + scale)</li>
+          <li>cursor: default — this is not a link</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 8. FONTS REFERENCE ── -->
+  <div class="section">
+    <p class="section-title">8 — Font Loading</p>
+    <div class="rule-card" style="max-width:540px;">
+      <p class="rule-heading">Google Fonts Import</p>
+      <pre style="font-family:monospace;font-size:10px;color:#555;line-height:1.7;white-space:pre-wrap;margin-top:6px;">Lora: ital,wght@0,400;0,700;1,400
+PT Sans: wght@400;700
+
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Lora:ital,
+wght@0,400;0,700;1,400&amp;family=PT+Sans:wght@400;700
+&amp;display=swap" rel="stylesheet"&gt;</pre>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
