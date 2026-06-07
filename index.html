@@ -9,6 +9,9 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { font-size: clamp(13px, 2.1vw, 17px); }
+html, body { height: 100%; }
+
 :root {
   --blue:       #00559A;
   --blue-pale:  #EBF2FA;
@@ -39,21 +42,21 @@ body {
   font-family: 'PT Sans', ui-sans-serif, system-ui, sans-serif;
   background: #FFFFFF;
   padding: 0;
+  min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
 }
 
 /* ── Card ── */
 .card {
   background: var(--white);
-  border-radius: 8px;
+  border-radius: 0.5em;
   width: 100%;
   max-width: 720px;
-  padding: 20px 22px 16px;
+  padding: 1.33em 1.45em 1.05em;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 2 / 3;
   opacity: 0;
   transform: translateY(6px);
   animation: cardIn 0.35s ease 0.08s forwards;
@@ -63,46 +66,46 @@ body {
 /* ── Header ── */
 .card-title {
   font-family: 'Lora', Georgia, serif;
-  font-size: 20px;
+  font-size: 1.33rem;
   font-weight: 700;
   color: var(--black);
   line-height: 1.3;
-  margin-bottom: 6px;
+  margin-bottom: 0.3em;
   flex-shrink: 0;
 }
 
 .card-deck {
   font-family: 'Lora', Georgia, serif;
   font-style: italic;
-  font-size: 15px;
+  font-size: 1rem;
   color: var(--grey-md);
   line-height: 1.52;
-  margin-bottom: 13px;
+  margin-bottom: 0.87em;
   flex-shrink: 0;
 }
 
 /* ── Legend ── */
 .legend {
   display: flex;
-  gap: 14px;
-  padding: 7px 0;
+  gap: 0.93em;
+  padding: 0.47em 0;
   border-top: 1px solid var(--surface);
   border-bottom: 1px solid var(--surface);
-  margin-bottom: 6px;
+  margin-bottom: 0.4em;
   flex-shrink: 0;
 }
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.36em;
   font-family: 'PT Sans', sans-serif;
-  font-size: 14px;
+  font-size: 0.93rem;
   font-weight: 700;
   color: var(--grey-dk);
 }
 .legend-swatch {
-  width: 10px; height: 10px;
-  border-radius: 2px;
+  width: 0.71em; height: 0.71em;
+  border-radius: 0.14em;
   flex-shrink: 0;
 }
 
@@ -126,74 +129,74 @@ body {
   top: 0; left: 0;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 9px 12px 8px;
+  border-radius: 0.4em;
+  padding: 0.6em 0.8em 0.53em;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.12s ease;
   font-family: 'PT Sans', sans-serif;
   box-shadow: 0 2px 10px rgba(0,0,0,0.09);
   z-index: 10;
-  min-width: 108px;
+  min-width: 7.2em;
 }
 .tooltip.visible { opacity: 1; }
 
 .tt-year {
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--black);
-  margin-bottom: 7px;
+  margin-bottom: 0.47em;
   line-height: 1;
 }
 .tt-row {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 4px;
+  gap: 0.33em;
+  margin-bottom: 0.27em;
   line-height: 1;
 }
 .tt-row:last-child { margin-bottom: 0; }
 .tt-dot {
-  width: 8px; height: 8px;
+  width: 0.53em; height: 0.53em;
   border-radius: 50%;
   flex-shrink: 0;
 }
 .tt-dot--ptn { background: var(--blue); }
 .tt-dot--pts { background: var(--gold); }
 .tt-tag {
-  font-size: 13px;
+  font-size: 0.87rem;
   font-weight: 700;
   color: var(--grey-lt);
   flex: 1;
   letter-spacing: 0.03em;
 }
 .tt-val {
-  font-size: 14px;
+  font-size: 0.93rem;
   font-weight: 700;
 }
 .tt-val--ptn { color: var(--blue); }
 .tt-val--pts { color: var(--gold-deep); }
 .tt-diff {
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.025em;
-  padding: 2px 7px;
+  padding: 0.17em 0.58em;
   border-radius: 9999px;
   background: var(--blue-pale);
   color: var(--blue-deep);
-  margin-left: 4px;
+  margin-left: 0.33em;
   white-space: nowrap;
 }
 
 /* ── Source note ── */
 .source-note {
   font-family: 'PT Sans', sans-serif;
-  font-size: 12px;
+  font-size: 0.8rem;
   color: var(--grey-lt);
   line-height: 1.45;
   border-top: 1px solid var(--border);
-  padding-top: 9px;
-  margin-top: 13px;
+  padding-top: 0.75em;
+  margin-top: 1.08em;
   flex-shrink: 0;
 }
 .source-note strong { color: var(--grey-md); font-weight: 700; }
@@ -246,7 +249,9 @@ const DATA = [
 const Y_MIN   = 30;
 const Y_MAX   = 72;
 const Y_TICKS = [35, 40, 45, 50, 55, 60, 65, 70];
-const M       = { top: 18, right: 24, bottom: 44, left: 54 };
+/* Chart margins scale with the root font so spacing stays proportional
+   across iframe widths. Recomputed each draw() from the current rem. */
+let M = { top: 18, right: 24, bottom: 44, left: 54 };
 
 const SVG  = document.getElementById('chart-svg');
 const TIP  = document.getElementById('tooltip');
@@ -327,9 +332,11 @@ function showTip(idx, svgRect) {
   const onLeft     = idx <= DATA.length / 2;
   const tipW       = TIP.offsetWidth || 130;
   const tipY       = svgRect.top - cRect.top + M.top;
+  /* gap between crosshair and tooltip, scaled with the root font */
+  const gap        = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 15) * 0.93;
 
-  TIP.style.left   = onLeft  ? (absX + 14) + 'px' : 'auto';
-  TIP.style.right  = !onLeft ? (cRect.width - absX + 14) + 'px' : 'auto';
+  TIP.style.left   = onLeft  ? (absX + gap) + 'px' : 'auto';
+  TIP.style.right  = !onLeft ? (cRect.width - absX + gap) + 'px' : 'auto';
   TIP.style.top    = tipY + 'px';
 }
 
@@ -348,6 +355,16 @@ function draw(animate) {
   const rect = SVG.getBoundingClientRect();
   W = rect.width;  H = rect.height;
   if (W < 10 || H < 10) return;
+
+  /* The SVG has no viewBox, so its user units == rendered px. Derive all
+     label sizes and margins from the live root font-size so they scale
+     fluidly with the iframe instead of being locked to fixed px. */
+  const root = parseFloat(getComputedStyle(document.documentElement).fontSize) || 15;
+  M = { top: root * 1.2, right: root * 1.6, bottom: root * 2.9, left: root * 3.6 };
+  const fY    = root * 0.8;   /* y-axis labels   */
+  const fX    = root * 0.8;   /* x-axis years    */
+  const fCall = root * 0.73;  /* "50%" callout   */
+  const xDy   = root * 1.45;  /* year label drop */
 
   plotW = W - M.left - M.right;
   plotH = H - M.top  - M.bottom;
@@ -372,7 +389,7 @@ function draw(animate) {
       x: M.left - 7, y,
       'text-anchor': 'end', 'dominant-baseline': 'middle',
       'font-family': "'PT Sans', sans-serif",
-      'font-size': 12, 'font-weight': 700, fill: lColor,
+      'font-size': fY, 'font-weight': 700, fill: lColor,
     }));
 
     /* "50%" callout label to the right */
@@ -381,22 +398,28 @@ function draw(animate) {
         x: M.left + plotW + 5, y,
         'text-anchor': 'start', 'dominant-baseline': 'middle',
         'font-family': "'PT Sans', sans-serif",
-        'font-size': 11, 'font-weight': 700, fill: '#BBBBBB',
+        'font-size': fCall, 'font-weight': 700, fill: '#BBBBBB',
       }));
     }
   }
 
   /* — X labels — */
+  /* When the per-year gap gets too tight (narrow iframes) drop the
+     intermediate years and keep only the prominent ones so labels
+     never overlap. */
+  const xStep    = plotW / (DATA.length - 1);
+  const showAllX = xStep > fX * 2.6;
   DATA.forEach((d, i) => {
-    /* show all years; thinner color for intermediate ones */
     const prominent = i === 0 || i === DATA.length - 1 || i % 3 === 0;
-    SVG.appendChild(txt(d.year, {
-      x: xOf(d.year), y: M.top + plotH + 22,
-      'text-anchor': 'middle', 'dominant-baseline': 'auto',
-      'font-family': "'PT Sans', sans-serif",
-      'font-size': 12, 'font-weight': 700,
-      fill: prominent ? '#888888' : '#BBBBBB',
-    }));
+    if (prominent || showAllX) {
+      SVG.appendChild(txt(d.year, {
+        x: xOf(d.year), y: M.top + plotH + xDy,
+        'text-anchor': 'middle', 'dominant-baseline': 'auto',
+        'font-family': "'PT Sans', sans-serif",
+        'font-size': fX, 'font-weight': 700,
+        fill: prominent ? '#888888' : '#BBBBBB',
+      }));
+    }
     /* tick */
     SVG.appendChild(el('line', {
       x1: xOf(d.year), y1: M.top + plotH,
@@ -457,12 +480,18 @@ function draw(animate) {
   });
 
   let lastIdx = -1;
-  zone.addEventListener('mousemove', e => {
+  function pointAt(clientX) {
     const svgRect = SVG.getBoundingClientRect();
-    const idx = nearestIdx(e.clientX - svgRect.left);
+    const idx = nearestIdx(clientX - svgRect.left);
     if (idx !== lastIdx) { lastIdx = idx; showTip(idx, svgRect); }
-  });
+  }
+  zone.addEventListener('mousemove', e => pointAt(e.clientX));
   zone.addEventListener('mouseleave', () => { lastIdx = -1; hideTip(); });
+
+  /* Touch: there's no mouseleave, so update on touch and dismiss on a
+     tap outside the chart (handled once, globally, below). */
+  zone.addEventListener('touchstart', e => { pointAt(e.touches[0].clientX); }, { passive: true });
+  zone.addEventListener('touchmove',  e => { pointAt(e.touches[0].clientX); }, { passive: true });
 
   SVG.appendChild(zone);
 
@@ -506,6 +535,11 @@ if ('IntersectionObserver' in window) {
 } else {
   setTimeout(trigger, 250);
 }
+
+/* ─ Dismiss tooltip when tapping outside the chart (touch has no leave) ─ */
+document.addEventListener('touchstart', e => {
+  if (!SVG.contains(e.target)) hideTip();
+}, { passive: true });
 
 /* ─ Resize ─ */
 if ('ResizeObserver' in window) {
